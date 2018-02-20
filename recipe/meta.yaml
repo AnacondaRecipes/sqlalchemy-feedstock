@@ -1,6 +1,6 @@
 {% set name = "SQLAlchemy" %}
-{% set version = "1.2.1" %}
-{% set sha256 = "9ede7070d6fd18f28058be88296ed67893e2637465516d6a596cd9afea97b154" %}
+{% set version = "1.2.3" %}
+{% set sha256 = "9e9ec143e2e246f385cfb2de8daa89d2fa466279addcb7be9e102988fdf33d24" %}
 
 package:
   name: {{ name|lower }}
