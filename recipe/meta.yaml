@@ -21,11 +21,13 @@ requirements:
     - pip
   run:
     - python
-    - importlib_metadata
+    - importlib-metadata  # [py<38]
+    - greenlet !=0.4.17   # [py3k]
 
 test:
   requires:
     - mock  # [py27]
+    - pip
   imports:
     - sqlalchemy
     - sqlalchemy.connectors
@@ -47,6 +49,8 @@ test:
     - sqlalchemy.testing
     - sqlalchemy.testing.plugin
     - sqlalchemy.util
+  commands:
+    - pip check
 
 about:
   home: http://www.sqlalchemy.org/
