@@ -17,10 +17,10 @@ requirements:
     - python                                 # [build_platform != target_platform]
     - {{ compiler('c') }}
   host:
-    - python
+    - python >=2.7|>=3.6
     - pip
   run:
-    - python
+    - python >=2.7|>=3.6
     - importlib-metadata  # [py<38]
     - greenlet !=0.4.17   # [py3k]
 
