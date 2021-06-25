@@ -16,6 +16,8 @@ requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - {{ compiler('c') }}
+    - wheel
+    - setuptools
   host:
     - python
     - pip
@@ -56,6 +58,7 @@ about:
   home: http://www.sqlalchemy.org/
   license: MIT
   license_file: LICENSE
+  license_family: MIT
   summary: Database Abstraction Library.
   description: |
     SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that
