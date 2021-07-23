@@ -1,4 +1,4 @@
-{% set version = "1.4.21" %}
+{% set version = "1.4.22" %}
 
 package:
   name: sqlalchemy
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/S/SQLAlchemy/SQLAlchemy-{{ version }}.tar.gz
-  sha256: 07e9054f4df612beadd12ca8a5342246bffcad74a1fa8df1368d1f2bb07d8fc7
+  sha256: ec1be26cdccd60d180359a527d5980d959a26269a2c7b1b327a1eea0cab37ed8
 
 build:
   number: 0
@@ -16,11 +16,11 @@ requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - {{ compiler('c') }}
-    - wheel
-    - setuptools
   host:
     - python
     - pip
+    - wheel
+    - setuptools
   run:
     - python
     - importlib-metadata  # [py<38]
@@ -63,8 +63,8 @@ about:
   description: |
     SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that
     gives application developers the full power and flexibility of SQL.
-  doc_url: http://docs.sqlalchemy.org/en/rel_1_0/
-  dev_url: https://bitbucket.org/zzzeek/sqlalchemy/
+  doc_url: http://docs.sqlalchemy.org/
+  dev_url: https://github.com/sqlalchemy/sqlalchemy
   doc_source_url: https://github.com/zzzeek/sqlalchemy/blob/master/doc/build/index.rst
 
 extra:
