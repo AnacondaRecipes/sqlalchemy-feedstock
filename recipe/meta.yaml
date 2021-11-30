@@ -21,13 +21,12 @@ requirements:
     - wheel
     - setuptools
   run:
-    - python
+    - python >=3.6
     - importlib-metadata  # [py<38]
     - greenlet !=0.4.17   # [py3k]
 
 test:
   requires:
-    - mock  # [py27]
     - pip
   imports:
     - sqlalchemy
