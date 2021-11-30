@@ -21,7 +21,7 @@ requirements:
     - wheel
     - setuptools
   run:
-    - python >=3.6
+    - python
     - importlib-metadata  # [py<38]
     - greenlet !=0.4.17   # [py3k]
 
