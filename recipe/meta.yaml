@@ -27,7 +27,6 @@ requirements:
 
 test:
   requires:
-    - asyncio
     - pip
   imports:
     - sqlalchemy
