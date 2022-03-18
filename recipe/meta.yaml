@@ -27,7 +27,7 @@ requirements:
 
 test:
   requires:
-    - mock  # [py==27]
+    - asyncio
     - pip
   imports:
     - sqlalchemy
