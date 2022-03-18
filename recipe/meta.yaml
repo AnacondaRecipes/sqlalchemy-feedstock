@@ -27,6 +27,7 @@ requirements:
 
 test:
   requires:
+    - mock  # [py==27]
     - pip
   imports:
     - sqlalchemy
