@@ -1,5 +1,5 @@
 {% set name = "sqlalchemy" %}
-{% set version = "1.4.39" %}
+{% set version = "2.0.21" %}
 
 package:
   name: {{ name|lower }}
@@ -7,49 +7,50 @@ package:
 
 source:
   url: https://pypi.io/packages/source/S/SQLAlchemy/SQLAlchemy-{{ version }}.tar.gz
-  sha256: 8194896038753b46b08a0b0ae89a5d80c897fb601dd51e243ed5720f1f155d27
+  sha256: 05b971ab1ac2994a14c56b35eaaa91f86ba080e9ad481b20d99d77f381bb6258
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  skip: true  # [py<37]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
     - {{ compiler('c') }}
   host:
     - python
+    - cython
     - pip
     - wheel
     - setuptools
   run:
     - python
+    - greenlet !=0.4.17
     - importlib-metadata  # [py<38]
-    - greenlet !=0.4.17   # [py>=30]
+    - typing-extensions >=4.2.0
 
 test:
-  requires:
-    - pip
   imports:
     - sqlalchemy
     - sqlalchemy.connectors
-    - sqlalchemy.databases
     - sqlalchemy.dialects
-    - sqlalchemy.dialects.firebird
     - sqlalchemy.dialects.mssql
     - sqlalchemy.dialects.mysql
     - sqlalchemy.dialects.oracle
     - sqlalchemy.dialects.postgresql
     - sqlalchemy.dialects.sqlite
-    - sqlalchemy.dialects.sybase
     - sqlalchemy.engine
     - sqlalchemy.event
     - sqlalchemy.ext
+    - sqlalchemy.ext.asyncio
     - sqlalchemy.ext.declarative
     - sqlalchemy.orm
     - sqlalchemy.sql
     - sqlalchemy.testing
     - sqlalchemy.testing.plugin
     - sqlalchemy.util
+  requires:
+    - pip
   commands:
     - pip check
 
@@ -64,7 +65,6 @@ about:
     gives application developers the full power and flexibility of SQL.
   doc_url: https://docs.sqlalchemy.org/
   dev_url: https://github.com/sqlalchemy/sqlalchemy
-  doc_source_url: https://github.com/zzzeek/sqlalchemy/blob/master/doc/build/index.rst
 
 extra:
   recipe-maintainers:
