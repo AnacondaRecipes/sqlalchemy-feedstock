@@ -25,7 +25,8 @@ requirements:
     - setuptools
   run:
     - python
-    - importlib-metadata
+    - greenlet !=0.4.17
+    - importlib-metadata  # [py<38]
 
 test:
   imports:
