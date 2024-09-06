@@ -1,13 +1,13 @@
 {% set name = "sqlalchemy" %}
-{% set version = "2.0.30" %}
+{% set version = "2.0.34" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/S/SQLAlchemy/SQLAlchemy-{{ version }}.tar.gz
-  sha256: 2b1708916730f4830bc69d6f49d37f7698b5bd7530aca7f04f785f8849e95255
+  url: https://pypi.io/packages/source/S/SQLAlchemy/sqlalchemy-{{ version }}.tar.gz
+  sha256: 10d8f36990dd929690666679b0f42235c159a7051534adb135728ee52828dd22
 
 build:
   number: 0
@@ -25,7 +25,7 @@ requirements:
     - setuptools
   run:
     - python
-    - greenlet !=0.4.17
+    - greenlet !=0.4.17  # [py<313]
     - importlib-metadata  # [py<38]
     - typing-extensions >=4.6.0
 
@@ -51,8 +51,21 @@ test:
     - sqlalchemy.util
   requires:
     - pip
+    - pytest >=7,<8.2
+    - pytest-xdist
+    - mypy >=1.7.0
+    - sqlite
+  source_files:
+    - pyproject.toml
+    - setup.cfg
+    - examples
+    - lib
+    - test
   commands:
     - pip check
+    # Error with test teardown closing sqlite database on python > 3.10 in a conda env.
+    - pytest -n8 test -m "not backend" -k "not aaa_profiling"  # [py<=310]
+    - pytest -n8 test -m "backend" -k "not aaa_profiling"
 
 about:
   home: https://www.sqlalchemy.org/
