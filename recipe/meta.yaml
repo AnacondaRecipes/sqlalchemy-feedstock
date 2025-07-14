@@ -1,13 +1,13 @@
 {% set name = "sqlalchemy" %}
-{% set version = "2.0.39" %}
+{% set version = "2.0.41" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/S/SQLAlchemy/sqlalchemy-{{ version }}.tar.gz
-  sha256: 5d2d1fe548def3267b4c70a8568f108d1fed7cbbeccb9cc166e05af2abc25c22
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: edba70118c4be3c2b1f90754d308d0b79c6fe2c0fdc52d8ddf603916f83f4db9
 
 build:
   number: 0
@@ -19,20 +19,50 @@ requirements:
     - {{ compiler('c') }}
   host:
     - python
-    - cython
+    - cython >=0.29.24
     - pip
     - wheel
-    - setuptools
+    - setuptools >=61.0
   run:
     - python
-    - greenlet !=0.4.17  # [py<314]
+    - greenlet >=1  # [py<314]
     - importlib-metadata  # [py<38]
     - typing-extensions >=4.6.0
+  run_constrained:
+    - mypy >=0.910
+    # mysql
+    - mysqlclient >=1.4.0
+    # mariadb_connector
+    - mariadb >=1.0.1,!=1.1.2,!=1.1.5,!=1.1.10
+    # oracle
+    - cx_oracle >=8
+    # oracle_oracledb
+    - oracledb >=1.0.1
+    # postgresql
+    - psycopg2 >=2.7
+    # postgresql_pg8000
+    - pg8000 >=1.29.1
+    # postgresql_psycopg
+    # postgresql_psycopgbinary
+    - psycopg >=3.0.7
+    # aiomysql
+    - aiomysql >=0.2.0
+    # asyncmy
+    - asyncmy >=0.2.3,!=0.2.4,!=0.2.6
+    # aiosqlite
+    - typing_extensions !=3.10.0.1
 
 test:
+  source_files:
+    - pyproject.toml
+    - setup.cfg
+    - examples
+    - lib
+    - test
   imports:
     - sqlalchemy
     - sqlalchemy.connectors
+    - sqlalchemy.cyextension
     - sqlalchemy.dialects
     - sqlalchemy.dialects.mssql
     - sqlalchemy.dialects.mysql
@@ -40,35 +70,31 @@ test:
     - sqlalchemy.dialects.postgresql
     - sqlalchemy.dialects.sqlite
     - sqlalchemy.engine
+    - sqlalchemy.future
     - sqlalchemy.event
     - sqlalchemy.ext
     - sqlalchemy.ext.asyncio
     - sqlalchemy.ext.declarative
     - sqlalchemy.orm
+    - sqlalchemy.pool
     - sqlalchemy.sql
     - sqlalchemy.testing
     - sqlalchemy.testing.plugin
     - sqlalchemy.util
+  commands:
+    - pip check
+    # Error with test teardown closing sqlite database on python > 3.10 in a conda env.
+    - pytest -n8 test -m "not backend" -k "not (aaa_profiling or test_pickle_rows_other_process or test_mypy_no_plugin or test_timeout_subsecond_precision)"  # [py<=310]
+    - pytest -n8 test -m "backend" -k "not (aaa_profiling or test_pickle_rows_other_process or test_mypy_no_plugin or test_timeout_subsecond_precision)"
   requires:
     - pip
     - pytest >=7,<8.2
     - pytest-xdist
     - mypy >=1.7.0
     - sqlite
-  source_files:
-    - pyproject.toml
-    - setup.cfg
-    - examples
-    - lib
-    - test
-  commands:
-    - pip check
-    # Error with test teardown closing sqlite database on python > 3.10 in a conda env.
-    - pytest -n8 test -m "not backend" -k "not (aaa_profiling or test_pickle_rows_other_process)"  # [py<=310]
-    - pytest -n8 test -m "backend" -k "not (aaa_profiling or test_pickle_rows_other_process)"
 
 about:
-  home: https://www.sqlalchemy.org/
+  home: https://www.sqlalchemy.org
   license: MIT
   license_file: LICENSE
   license_family: MIT
@@ -76,7 +102,7 @@ about:
   description: |
     SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that
     gives application developers the full power and flexibility of SQL.
-  doc_url: https://docs.sqlalchemy.org/
+  doc_url: https://docs.sqlalchemy.org
   dev_url: https://github.com/sqlalchemy/sqlalchemy
 
 extra:
