@@ -1,5 +1,5 @@
 {% set name = "sqlalchemy" %}
-{% set version = "2.0.41" %}
+{% set version = "2.0.43" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: edba70118c4be3c2b1f90754d308d0b79c6fe2c0fdc52d8ddf603916f83f4db9
+  sha256: 788bfcef6787a7764169cfe9859fe425bf44559619e1d9f56f5bddf2ebf6f417
 
 build:
   number: 0
@@ -16,17 +16,17 @@ build:
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
   host:
-    - python
-    - cython >=0.29.24
     - pip
-    - wheel
+    - python
     - setuptools >=61.0
+    - cython >=0.29.24
   run:
     - python
-    - greenlet >=1  # [py<314]
     - importlib-metadata  # [py<38]
+    - greenlet >=1  # [py<314]
     - typing-extensions >=4.6.0
   run_constrained:
     - mypy >=0.910
