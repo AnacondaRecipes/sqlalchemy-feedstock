@@ -89,7 +89,7 @@ test:
     - pytest -n8 test -m "backend" -k "not (aaa_profiling or test_pickle_rows_other_process or test_mypy_no_plugin or test_timeout_subsecond_precision)"
   requires:
     - pip
-    - pytest >=7,<8.2
+    - pytest >=7,<10.0
     - pytest-xdist
     - mypy >=1.7.0
     - sqlite
