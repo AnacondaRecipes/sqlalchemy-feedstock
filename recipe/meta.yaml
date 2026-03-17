@@ -1,5 +1,5 @@
 {% set name = "sqlalchemy" %}
-{% set version = "2.0.45" %}
+{% set version = "2.0.48" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1632a4bda8d2d25703fdad6363058d882541bdaaee0e5e3ddfa0cd3229efce88
+  sha256: 5ca74f37f3369b45e1f6b7b06afb182af1fd5dde009e4ffd831830d98cbe5fe7
 
 build:
   number: 0
@@ -28,7 +28,6 @@ requirements:
     - importlib-metadata  # [py<38]
     - greenlet >=1
     - typing-extensions >=4.6.0
-    - typing_extensions >=4.6.0
   run_constrained:
     - mypy >=0.910
     # mysql
